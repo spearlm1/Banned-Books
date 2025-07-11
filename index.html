@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Banned Books Series8</title>
+  <title>The Banned Books Series9</title>
   <style>
     body {
       font-family: sans-serif;
@@ -33,21 +33,65 @@
   margin-top: 0.5rem;
   font-size: 1rem;
 }
-    .gallery-item textarea {
+   .gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.gallery-item {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.image-section {
+  width: 200px;
+  text-align: center;
+}
+
+.image-section img {
   width: 100%;
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.title {
   margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.book-title {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.comment-section {
+  flex: 1;
+}
+
+.comment-section label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.comment-section textarea {
+  width: 100%;
   padding: 0.5rem;
   font-size: 0.9rem;
   border: 1px solid #aaa;
   border-radius: 4px;
   resize: vertical;
-}
 
-.gallery-item label {
-  display: block;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  font-weight: bold;
+  
 }
 
   </style>
@@ -73,12 +117,17 @@
 <h2>Featured Books & Paintings</h2>
 
   <div class="gallery">
-    <div class="gallery-item">
-      <img src="images/AmericanHate.jpg" alt="Innocence painting">
-      <div class="title"> <strong><em>American Hate: Survivors Speak Out </em> </strong> by Maia Kobabe </div>
-        <label for="innocence-comment">Why was this book banned? What is it about? Please share your thoughts. </label>
-  <textarea id="innocence-comment" name="innocence-comment" rows="4" cols="25" placeholder="Write here..."></textarea>
-    </div>
+   <div class="gallery-item">
+  <div class="image-section">
+    <img src="AmericanHate.jpg" alt="Hate painting">
+    <div class="title"><span class="book-title">American Hate: Survivors Speak Out by Toni Morrison</div>
+  </div>
+  <div class="comment-section">
+    <label for="hate-comment">Why was this book banned? What is it about? Please share your thoughts.</label>
+    <textarea id="hate-comment" name="hate-comment" rows="6" placeholder="Write here..."></textarea>
+  </div>
+</div>
+
     <p>
       -----
     </p>
