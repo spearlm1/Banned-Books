@@ -94,117 +94,6 @@
 </head>
 <body>
 
-  <h1>The Banned Books Series TEST </h1>
-
-  <p>
-      
-    Each of these paintings represents a book that has been banned. Most were banned by the United States Naval Academy and are now targeted in schools, libraries, and other institutions across the U.S. These books contain some of the rich diversity of race, culture, self-expression, and beliefs that are endangered by attacks on intellectual freedom and democracy itself.
-  </p>
-
- 
-  <p>
-   Some of them have been banned in an effort to deny the existence, personhood, or value of many people who built our country or make it what it is today. Some present uncomfortable history or inconvenient truths. Some are mere entertainment, but their authors' self-expression gives authentic insights into lived experience that bans attempt to un-write.
-      
-      <p>
-    To resist being un-written, all we have to do is read. So, please, share these paintings. Keep reading. Keep questioning. Keep thinking. We can be the change. 
-
-  </p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Banned Books Series</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 2rem;
-      line-height: 1.6;
-      background: #fdfdfd;
-      color: #222;
-    }
-    h1 {
-      font-size: 2.2rem;
-      color: #b30000;
-      margin-bottom: 1rem;
-    }
-    p {
-      max-width: 800px;
-    }
-
-.gallery-item img {
-  width: 150px;
-  height: auto;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-}
-
-.gallery-item .title {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-}
-   .gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
-.gallery-item {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 6px;
-  background-color: #fafafa;
-}
-
-.image-section {
-  width: 200px;
-  text-align: center;
-}
-
-.image-section img {
-  width: 100%;
-  height: auto;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-}
-
-.title {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-}
-
-
-
-.comment-section {
-  flex: 1;
-}
-
-.comment-section label {
-  font-size: 0.7rem;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.comment-section textarea {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 0.9rem;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  resize: vertical;
-
-  
-}
-
-  </style>
-</head>
-<body>
-
   <h1>The Banned Books Series</h1>
 
   <p>
@@ -220,6 +109,66 @@
     To resist being un-written, all we have to do is read. So, please, share these paintings. Keep reading. Keep questioning. Keep thinking. We can be the change. 
 
   </p>
+<div class="gallery-item">
+  <div class="image-section">
+    <!-- You can add an optional image here, or leave blank -->
+  </div>
+
+  <div class="comment-section">
+    <h2 style="margin-top:0; color:#b30000; font-size:1.2rem;">
+      Please share the title of a book that has been banned so it can be represented here.
+    </h2>
+    <form id="bookForm">
+      <label for="bookTitle">Book title</label>
+      <textarea id="bookTitle" name="bookTitle" rows="2" placeholder="e.g., Maus, The Bluest Eye" required></textarea>
+      <button type="submit"
+        style="margin-top:0.5rem; padding:0.5rem 1rem; background:#b30000; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+        Submit
+      </button>
+    </form>
+
+    <div id="entries" style="margin-top:1rem; font-size:0.9rem;"></div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("bookForm");
+  const entries = document.getElementById("entries");
+  const KEY = "bannedBooks:v1";
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch { return []; }
+  }
+  function save(data) {
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+  function render(items) {
+    entries.innerHTML = "";
+    if (!items.length) {
+      entries.innerHTML = "<p style='color:#666;'>No submissions yet.</p>";
+      return;
+    }
+    items.slice().reverse().forEach(title => {
+      const div = document.createElement("div");
+      div.textContent = "• " + title;
+      entries.appendChild(div);
+    });
+  }
+
+  render(load());
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = form.bookTitle.value.trim();
+    if (!text) return;
+    const data = load();
+    data.push(text);
+    save(data);
+    render(data);
+    form.reset();
+  });
+</script>
 
 <h2>Featured Books & Paintings</h2>
 
@@ -230,6 +179,16 @@
   </div>
   <div class="comment-section">
     <label for="roses-comment">What is this book about? Why was it banned? Please share your thoughts</label>
+    <textarea id="roses-comment" name="roses-comment" rows="6" placeholder="Write here..."></textarea>
+  </div>
+</div>
+ <div class="gallery-item">
+  <div class="image-section">
+    <img src="images/ASayInTheLifeOfMarlonBundo.jpg" alt="marlon-painting">
+    <div class="title"><span class="book-title"><strong>A Day in The Life Of <br>Marlon Bundo </strong> <br> by Marlon Bundo with Jill Twiss  E.G. Keller</div>
+  </div>
+  <div class="comment-section">
+    <label for="marlon-comment">What is this book about? Why was it banned? Please share your thoughts</label>
     <textarea id="roses-comment" name="roses-comment" rows="6" placeholder="Write here..."></textarea>
   </div>
 </div>
@@ -254,6 +213,18 @@
   </div>
   <div class="comment-section">
     <label for="skin-comment">What is this book about? Why was it banned? Please share your thoughts.</label>
+    <textarea id="skin-comment" name="skin-comment" rows="6" placeholder="Write here..."></textarea>
+  </div>
+</div>
+
+ <div class="gallery">
+   <div class="gallery-item">
+  <div class="image-section">
+    <img src="images/AmericasOriginalSin.jpg" alt="Sin-painting">
+    <div class="title"><span class="book-title"><strong>America's Original Sin: </strong> <em> Racism, White Privilege, and the Bridge to a New America <br></em>by Jim Wallis</div>
+  </div>
+  <div class="comment-section">
+    <label for="sin-comment">What is this book about? Why was it banned? Please share your thoughts.</label>
     <textarea id="skin-comment" name="skin-comment" rows="6" placeholder="Write here..."></textarea>
   </div>
 </div>
@@ -344,6 +315,17 @@
   <div class="comment-section">
     <label for="handmaid-comment">What is this book about? Why was it banned? Please share your thoughts</label>
     <textarea id="handmaid-comment" name="handmaid-comment" rows="6" placeholder="Write here..."></textarea>
+  </div>
+</div>
+
+  <div class="gallery-item">
+  <div class="image-section">
+    <img src="images/HitlersFinalSolution.jpg" alt="solution-painting">
+    <div class="title"><span class="book-title"><strong>Hitler's Final Solution</strong> <br> by John Allen</div>
+  </div>
+  <div class="comment-section">
+    <label for="solution-comment">What is this book about? Why was it banned? Please share your thoughts</label>
+    <textarea id="holes-comment" name="holes-comment" rows="6" placeholder="Write here..."></textarea>
   </div>
 </div>
 
@@ -576,381 +558,16 @@
   
    <div class="gallery-item">
   <div class="image-section">
-    <img src="images/WordsThatWound.jpg" alt="wound-painting">
-    <div class="title"><span class="book-title"><strong>Words That Wound </strong> <br> <em>Critical Race Theory, Assaultive Speech, And The First Amendment (New Perspectives on Law, Culture, and Society)  <br></em>by M.J. Matsuda, C.R. Lawrence, R. Delgado, & K.W. Crenshaw </div>
+    <img src="images/WhiteTooLong.jpg" alt="White-painting">
+    <div class="title"><span class="book-title"><strong>White Too Long: </strong> <br> <em>The Legacy of White Supremacy in American Christianity <br></em>by Robert P. Jones</div>
   </div>
   <div class="comment-section">
-    <label for="wound-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="wound-comment" name="wound-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-<h2>Featured Books & Paintings</h2>
-
-    <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/ACourtOfThornsAndRoses.jpg" alt="roses-painting">
-    <div class="title"><span class="book-title"><strong>A Court of <br>Thorns and Roses </strong> <br> by Sarah J. Maas</div>
-  </div>
-  <div class="comment-section">
-    <label for="roses-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="roses-comment" name="roses-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-  <div class="gallery">
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/AmericanHate.jpg" alt="Hate-painting">
-    <div class="title"><span class="book-title"><strong>American Hate: <br> </strong> <em> Survivors Speak Out <br></em>by Arjun Singh Sethi</div>
-  </div>
-  <div class="comment-section">
-    <label for="hate-comment">What is this book about? Why was it banned? Please share your thoughts.</label>
-    <textarea id="hate-comment" name="hate-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-  <div class="gallery">
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/AmericanSkin.jpg" alt="Skin-painting">
-    <div class="title"><span class="book-title"><strong>American Skin <br> </strong> <em> Pop Culture, Big Business, and the End of White America <br></em>by Leon E. Wynter Sethi</div>
-  </div>
-  <div class="comment-section">
-    <label for="skin-comment">What is this book about? Why was it banned? Please share your thoughts.</label>
-    <textarea id="skin-comment" name="skin-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-   
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/BluestEye.jpg" alt="bluest-painting">
-    <div class="title"><span class="book-title"><strong>The Bluest Eye </em></strong> <br> by Toni Morrison </div>
-  </div>
-  <div class="comment-section">
-    <label for="bluest-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="bluest-comment" name="bluest-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-   
-    <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/EmpireOfStorms.jpg" alt="storms-painting">
-    <div class="title"><span class="book-title"><strong>Empire Of Storms </em></strong> <br> by Sarah J. Maas </div>
-  </div>
-  <div class="comment-section">
-    <label for="bluest-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="storms-comment" name="storms-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-    <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/EverywhereYouDontBelong.jpg" alt="belong-painting">
-    <div class="title"><span class="book-title"><strong>Everywhere You Don't Belong </em></strong> <br> by Gabriel Bump </div>
-  </div>
-  <div class="comment-section">
-    <label for="belong-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="belong-comment" name="belong-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-      <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/Forever.jpg" alt="forever-painting">
-    <div class="title"><span class="book-title"><strong>Forever</em></strong> <br> by Judy Blume </div>
-  </div>
-  <div class="comment-section">
-    <label for="forever-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="forever-comment" name="forever-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/GenderQueer.jpg" alt="gender-painting">
-    <div class="title"><span class="book-title"><strong>Gender Queer </strong> <br> <em> A Memoir <br></em> by Maia Kobabe</div>
-  </div>
-  <div class="comment-section">
-    <label for="gender-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="gender-comment" name="gender-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-  
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/GoodDog.jpg" alt="dog-painting">
-    <div class="title"><span class="book-title"><strong>Good Boy </strong> <br> <em> My Life in Seven Dogs <br></em> by Jenner Finney Boylan</div>
-  </div>
-  <div class="comment-section">
-    <label for="dog-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="dog-comment" name="dog-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/HalfAmerican.jpg" alt="half-painting">
-    <div class="title"><span class="book-title"><strong>Half American </strong> <br> <em> The Heroic Story of African Americans Fighting WWII at Home and Abroad<br></em> by Matthew F. Delmont</div>
-  </div>
-  <div class="comment-section">
-    <label for="half-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="half-comment" name="half-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/HandmaidsTale.jpg" alt="handmaid-painting">
-    <div class="title"><span class="book-title"><strong>The Handmaid's Tale </strong> <br> by Margaret Atwood</div>
-  </div>
-  <div class="comment-section">
-    <label for="handmaid-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="handmaid-comment" name="handmaid-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/Holes.jpg" alt="holes-painting">
-    <div class="title"><span class="book-title"><strong>Holes</strong> <br> by Louis Sachar</div>
-  </div>
-  <div class="comment-section">
-    <label for="holes-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="holes-comment" name="holes-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-  
-    
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/Homegoing.jpg" alt="homegoing-painting">
-    <div class="title"><span class="book-title"><strong><em></em>Homegoing </em></strong> <br> by Yaa Gyasi </div>
-  </div>
-  <div class="comment-section">
-    <label for="homegoing-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="homegoing-comment" name="homegoing-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/KiteRunner.jpg" alt="kite-painting">
-    <div class="title"><span class="book-title"><strong>The Kite Runner </em></strong> <br> by Khaled Hosseini</div>
-  </div>
-  <div class="comment-section">
-    <label for="kite-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="kite-comment" name="kite-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/LeavesOfGrass.jpg" alt="leaves-painting">
-    <div class="title"><span class="book-title"><strong>Leaves of Grass </em></strong> <br> by Walt Whitman</div>
-  </div>
-  <div class="comment-section">
-    <label for="leaves-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="leaves-comment" name="leaves-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-  
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/LiesMyTeacherToldMe.jpg" alt="Lies-painting">
-    <div class="title"><span class="book-title"><strong>Lies My Teacher Told Me: </strong> <br><em>Everything your American History Teacher Got Wrong </em><br> by James W. Loewen </div>
-  </div>
-  <div class="comment-section">
-    <label for="lies-comment">What is this book about? Why was it banned?  Please share your thoughts.</label>
-    <textarea id="lies-comment" name="lies-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/MelissaGeorge.jpg" alt="melissa-painting">
-    <div class="title"><span class="book-title"><strong>Melissa (George) </em></strong> <br> by Alex Gino</div>
-  </div>
-  <div class="comment-section">
-    <label for="melissa-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="melissa-comment" name="melissa-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-   
-    <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/NakedInDeath.jpg" alt="naked-painting">
-    <div class="title"><span class="book-title"><strong>Naked In Death </strong> <br> by J.D. Robb, <br>a.k.a. Nora Roberts</div>
-  </div>
-  <div class="comment-section">
-    <label for="naked-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="naked-comment" name="naked-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-   
-    <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/OfMiceAndMen.jpg" alt="mice-painting">
-    <div class="title"><span class="book-title"><strong>Of Mice and Men </strong> <br> by John Steinbeck</div>
-  </div>
-  <div class="comment-section">
-    <label for="mice-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="mice-comment" name="mice-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/RichThanksToRacism.jpg" alt="rich-painting">
-    <div class="title"><span class="book-title"><strong>Rich Thanks to Racism: </strong> <br><em>How the Ultra-Wealthy Profit from Racial Injustice </em><br> by James W. Loewen </div>
-  </div>
-  <div class="comment-section">
-    <label for="rich-comment">What is this book about? Why was it banned?  Please share your thoughts.</label>
-    <textarea id="rich-comment" name="rich-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/Shadowboxing.jpg" alt="shadow-painting">
-    <div class="title"><span class="book-title"><strong>Shadowboxing </strong> <br><em>Representations of Black Feminist Politics </em><br> by James Joy </div>
-  </div>
-  <div class="comment-section">
-    <label for="shadow-comment">What is this book about? Why was it banned?  Please share your thoughts.</label>
-    <textarea id="shadow-comment" name="shadow-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/Sorrowland.jpg" alt="sorrow-painting">
-    <div class="title"><span class="book-title"><strong>Sorrowland </strong> <br> by Rivers Solomon</div>
-  </div>
-  <div class="comment-section">
-    <label for="sorrow-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="sorrow-comment" name="sorrow-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheColorPurple.jpg" alt="purple-painting">
-    <div class="title"><span class="book-title"><strong>The Color Purple </strong> <br> by Rivers Solomon</div>
-  </div>
-  <div class="comment-section">
-    <label for="purple-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="purple-comment" name="purple-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheHateUGive.jpg" alt="ugive-painting">
-    <div class="title"><span class="book-title"><strong>The Hate U Give </strong> <br> by Angie Thomas</div>
-  </div>
-  <div class="comment-section">
-    <label for="ugive-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="ugive-comment" name="ugive-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheLastWhiteMan.jpg" alt="last-painting">
-    <div class="title"><span class="book-title"><strong>The Last White Man </strong> <br> by Mohsin Hamid</div>
-  </div>
-  <div class="comment-section">
-    <label for="last-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="last-comment" name="last-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheNewPlantation.jpg" alt="plantation-painting">
-    <div class="title"><span class="book-title"><strong>The New Plantation: </strong> <br><em>Black Athletes, College Sports, and Predominantly White NCAA Institutions </em><br> by Billy Hawkins </div>
-  </div>
-  <div class="comment-section">
-    <label for="plantation-comment">What is this book about? Why was it banned?  Please share your thoughts.</label>
-    <textarea id="plantation-comment" name="plantation-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-
-
-       <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/RageOfInnocence.jpg" alt="rage-painting">
-    <div class="title"><span class="book-title"><strong>The Rage of Innocence </strong> <br> <em> How America Criminalizes Black Youth <br></em>by Kristen Henning</div>
-  </div>
-  <div class="comment-section">
-    <label for="rage-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="rage-comment" name="rage-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-  
-
-        <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheShowmanAndTheSlave.jpg" alt="showman-painting">
-    <div class="title"><span class="book-title"><strong>The Showman and the Slave </strong> <br> <em>Race, Death, and Memory in Barnum's America <br></em>by Benjamin Reiss</div>
-  </div>
-  <div class="comment-section">
-    <label for="showman-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="showman-comment" name="showman-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-  
-  
-     <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/TheStoryOfStuff.jpg" alt="stuff-painting">
-    <div class="title"><span class="book-title"><strong>The Story of Stuff </strong> <br> <em>How Our Obsession with Stuff Is Trashing the Planet, Our Communities, and Our Health-and a Vision for Change <br></em>by Annie Leonard</div>
-  </div>
-  <div class="comment-section">
-    <label for="stuff-comment">What is this book about? Why was it banned? Please share your thoughts</label>
+    <label for="white-comment">What is this book about? Why was it banned? Please share your thoughts</label>
     <textarea id="stuff-comment" name="stuff-comment" rows="6" placeholder="Write here..."></textarea>
   </div>
 </div>
-  
- <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/ToKillAMockingbird.jpg" alt="mockingbird-painting">
-    <div class="title"><span class="book-title"><strong>To Kill a Mockingbird </strong> <br> by Harper Lee</div>
-  </div>
-  <div class="comment-section">
-    <label for="mockingbird-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="mockingbird-comment" name="mockingbird-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
 
-   <div class="gallery-item">
-  <div class="image-section">
-    <img src="images/WaterForElephants.jpg" alt="Elephants-painting">
-    <div class="title"><span class="book-title"><strong>Water for Elephants </strong> <br> by Sara Gruen</div>
-  </div>
-  <div class="comment-section">
-    <label for="elephants-comment">What is this book about? Why was it banned? Please share your thoughts</label>
-    <textarea id="elephants-comment" name="elephants-comment" rows="6" placeholder="Write here..."></textarea>
-  </div>
-</div>
-  
+
    <div class="gallery-item">
   <div class="image-section">
     <img src="images/WordsThatWound.jpg" alt="wound-painting">
@@ -965,9 +582,6 @@
 
 </body>
 </html>
-
-
-
 
 
 
