@@ -541,24 +541,24 @@
           const text = document.createElement("span");
           text.textContent = "• " + title;
 
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "Delete";
-          delBtn.style.marginLeft = "1rem";
-          delBtn.style.padding = "0.2rem 0.5rem";
-          delBtn.style.fontSize = "0.8rem";
-          delBtn.style.cursor = "pointer";
-          delBtn.style.border = "1px solid #aaa";
-          delBtn.style.borderRadius = "4px";
-          delBtn.style.background = "#eee";
-          delBtn.addEventListener("click", () => {
-            const data = load();
-            data.splice(idx, 1);
-            save(data);
-            render(applyPurge(data));
+         // const delBtn = document.createElement("button");
+         // delBtn.textContent = "Delete";
+         // delBtn.style.marginLeft = "1rem";
+        //  delBtn.style.padding = "0.2rem 0.5rem";
+        //  delBtn.style.fontSize = "0.8rem";
+        //  delBtn.style.cursor = "pointer";
+        //  delBtn.style.border = "1px solid #aaa";
+        //  delBtn.style.borderRadius = "4px";
+        //  delBtn.style.background = "#eee";
+        //  delBtn.addEventListener("click", () => {
+        //    const data = load();
+         //   data.splice(idx, 1);
+       //     save(data);
+        //    render(applyPurge(data));
           });
 
           row.appendChild(text);
-          row.appendChild(delBtn);
+     //     row.appendChild(delBtn);
           entries.appendChild(row);
         });
       }
@@ -581,6 +581,7 @@
   </script>
 </body>
 </html>
+
 
 
 
