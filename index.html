@@ -108,93 +108,94 @@
       <p>
     To resist being un-written, all we have to do is read. So, please, share these paintings. Keep reading. Keep questioning. Keep thinking. We can be the change. 
 
- <script>
-  const form = document.getElementById("bookForm");
-  const entries = document.getElementById("entries");
-  const KEY = "bannedBooks:v1";
-
-  // 1) Put any titles you want to delete here (edit and re-upload the HTML).
-  //    Matching is case-insensitive and ignores extra spaces.
-  const PURGE_TITLES = [
-    // "Maus",
-    // "The Bluest Eye"
-  ];
-
-  function load() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-    catch { return []; }
-  }
-  function save(data) {
-    localStorage.setItem(KEY, JSON.stringify(data));
-  }
-
-  // Normalize text for comparison
-  const norm = s => String(s).trim().toLowerCase();
-
-  // Remove any titles listed in PURGE_TITLES
-  function applyPurge(items) {
-    if (!PURGE_TITLES.length) return items;
-    const purgeSet = new Set(PURGE_TITLES.map(norm));
-    const kept = items.filter(t => !purgeSet.has(norm(t)));
-    if (kept.length !== items.length) save(kept); // persist the cleaned list
-    return kept;
-  }
-
-  function render(items) {
-    entries.innerHTML = "";
-    if (!items.length) {
-      entries.innerHTML = "<p style='color:#666;'>No submissions yet.</p>";
-      return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Banned Books Series</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+      background: #fdfdfd;
+      color: #222;
     }
-    items.forEach((title, idx) => {
-      const row = document.createElement("div");
-      row.style.display = "flex";
-      row.style.justifyContent = "space-between";
-      row.style.alignItems = "center";
-      row.style.marginBottom = ".3rem";
+    h1 {
+      font-size: 2.2rem;
+      color: #b30000;
+      margin-bottom: 1rem;
+    }
+    p { max-width: 800px; }
 
-      const text = document.createElement("span");
-      text.textContent = "• " + title;
+    .gallery { display: flex; flex-direction: column; gap: 2rem; margin-top: 1rem; }
+    .gallery-item {
+      display: flex; gap: 2rem; align-items: flex-start;
+      border: 1px solid #ddd; padding: 1rem; border-radius: 6px; background-color: #fafafa;
+    }
+    .image-section { width: 200px; text-align: center; }
+    .image-section img { width: 100%; height: auto; border: 2px solid #ccc; border-radius: 4px; }
+    .title { margin-top: 0.5rem; font-size: 1rem; }
 
-      const delBtn = document.createElement("button");
-      delBtn.textContent = "Delete";
-      delBtn.style.marginLeft = "1rem";
-      delBtn.style.padding = "0.2rem 0.5rem";
-      delBtn.style.fontSize = "0.8rem";
-      delBtn.style.cursor = "pointer";
-      delBtn.style.border = "1px solid #aaa";
-      delBtn.style.borderRadius = "4px";
-      delBtn.style.background = "#eee";
+    .comment-section { flex: 1; }
+    .comment-section label { font-size: 0.7rem; display: block; margin-bottom: 0.5rem; }
+    .comment-section textarea {
+      width: 100%; padding: 0.5rem; font-size: 0.9rem;
+      border: 1px solid #aaa; border-radius: 4px; resize: vertical;
+    }
+  </style>
+</head>
+<body>
 
-      delBtn.addEventListener("click", () => {
-        const data = load();
-        data.splice(idx, 1);
-        save(data);
-        render(applyPurge(data));
-      });
+  <h1>The Banned Books Series</h1>
 
-      row.appendChild(text);
-      row.appendChild(delBtn);
-      entries.appendChild(row);
-    });
-  }
+  <div class="gallery">
+    <!-- Comment box block -->
+    <div class="gallery-item">
+      <div class="image-section">
+        <!-- optional image here -->
+      </div>
 
-  // Initial load → apply purge → render
-  const initial = load();
-  const cleaned = applyPurge(initial);
-  render(cleaned);
+      <div class="comment-section">
+        <h2 style="margin-top:0; color:#b30000; font-size:1.2rem;">
+          Please share the title of a book that has been banned so it can be represented here.
+        </h2>
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const text = form.bookTitle.value.trim();
-    if (!text) return;
-    const data = applyPurge(load());
-    data.push(text);
-    save(data);
-    render(applyPurge(data));
-    form.reset();
-  });
-</script>
+        <!-- FORM (IDs must match the script) -->
+        <form id="bookForm">
+          <label for="bookTitle">Book title</label>
+          <textarea id="bookTitle" name="bookTitle" rows="2"
+            placeholder="e.g., Maus, The Bluest Eye" required></textarea>
+          <button type="submit"
+            style="margin-top:0.5rem; padding:0.5rem 1rem; background:#b30000; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+            Submit
+          </button>
+        </form>
+
+        <!-- LIST CONTAINER (IDs must match the script) -->
+        <div id="entries" style="margin-top:1rem; font-size:0.9rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Place this script just before </body> -->
+  <script>
+    (function(){
+      const form = document.getElementById("bookForm");
+      const entries = document.getElementById("entries");
+      const KEY = "bannedBooks:v1";
+
+      // Edit this array in your HTML to purge titles globally on load
+      const PURGE_TITLES = [
+        // "Maus",
+        // "The Bluest Eye"
+      ];
+
+      function load() {
+        try { return JSON.parse(localStorage.getItem(KEY)) ||
+
 
 
 <h2>Featured Books & Paintings</h2>
@@ -618,6 +619,7 @@
 
 </body>
 </html>
+
 
 
 
