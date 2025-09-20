@@ -108,33 +108,17 @@
       <p>
     To resist being un-written, all we have to do is read. So, please, share these paintings. Keep reading. Keep questioning. Keep thinking. We can be the change. 
 
-  </p>
-<div class="gallery-item">
-  <div class="image-section">
-    <!-- You can add an optional image here, or leave blank -->
-  </div>
-
-  <div class="comment-section">
-    <h2 style="margin-top:0; color:#b30000; font-size:1.2rem;">
-      Please share the title of a book that has been banned so it can be represented here.
-    </h2>
-    <form id="bookForm">
-      <label for="bookTitle">Book title</label>
-      <textarea id="bookTitle" name="bookTitle" rows="2" placeholder="e.g., Maus, The Bluest Eye" required></textarea>
-      <button type="submit"
-        style="margin-top:0.5rem; padding:0.5rem 1rem; background:#b30000; color:#fff; border:none; border-radius:4px; cursor:pointer;">
-        Submit
-      </button>
-    </form>
-
-    <div id="entries" style="margin-top:1rem; font-size:0.9rem;"></div>
-  </div>
-</div>
-
-<script>
+ <script>
   const form = document.getElementById("bookForm");
   const entries = document.getElementById("entries");
   const KEY = "bannedBooks:v1";
+
+  // 1) Put any titles you want to delete here (edit and re-upload the HTML).
+  //    Matching is case-insensitive and ignores extra spaces.
+  const PURGE_TITLES = [
+    // "Maus",
+    // "The Bluest Eye"
+  ];
 
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)) || []; }
@@ -143,32 +127,75 @@
   function save(data) {
     localStorage.setItem(KEY, JSON.stringify(data));
   }
+
+  // Normalize text for comparison
+  const norm = s => String(s).trim().toLowerCase();
+
+  // Remove any titles listed in PURGE_TITLES
+  function applyPurge(items) {
+    if (!PURGE_TITLES.length) return items;
+    const purgeSet = new Set(PURGE_TITLES.map(norm));
+    const kept = items.filter(t => !purgeSet.has(norm(t)));
+    if (kept.length !== items.length) save(kept); // persist the cleaned list
+    return kept;
+  }
+
   function render(items) {
     entries.innerHTML = "";
     if (!items.length) {
       entries.innerHTML = "<p style='color:#666;'>No submissions yet.</p>";
       return;
     }
-    items.slice().reverse().forEach(title => {
-      const div = document.createElement("div");
-      div.textContent = "• " + title;
-      entries.appendChild(div);
+    items.forEach((title, idx) => {
+      const row = document.createElement("div");
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+      row.style.marginBottom = ".3rem";
+
+      const text = document.createElement("span");
+      text.textContent = "• " + title;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.style.marginLeft = "1rem";
+      delBtn.style.padding = "0.2rem 0.5rem";
+      delBtn.style.fontSize = "0.8rem";
+      delBtn.style.cursor = "pointer";
+      delBtn.style.border = "1px solid #aaa";
+      delBtn.style.borderRadius = "4px";
+      delBtn.style.background = "#eee";
+
+      delBtn.addEventListener("click", () => {
+        const data = load();
+        data.splice(idx, 1);
+        save(data);
+        render(applyPurge(data));
+      });
+
+      row.appendChild(text);
+      row.appendChild(delBtn);
+      entries.appendChild(row);
     });
   }
 
-  render(load());
+  // Initial load → apply purge → render
+  const initial = load();
+  const cleaned = applyPurge(initial);
+  render(cleaned);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const text = form.bookTitle.value.trim();
     if (!text) return;
-    const data = load();
+    const data = applyPurge(load());
     data.push(text);
     save(data);
-    render(data);
+    render(applyPurge(data));
     form.reset();
   });
 </script>
+
 
 <h2>Featured Books & Paintings</h2>
 
